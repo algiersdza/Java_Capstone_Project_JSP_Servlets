@@ -7,22 +7,24 @@ import com.group18.capstone.model.User;
 public class UserDao {
     //email verfication
 
-    public Boolean checkEmailUser (String email){
+    public Boolean checkEmailUser (String email) throws SQLException {
         String result="";
         String strQuery = "SELECT COUNT(*) FROM user.user where EmailAddress='"+email+"'";
+        String Countrow;
+        ResultSet rs = null;
 
 //        String CHECK_EMAIL_SQL = "use user;" +
 //        "SELECT * FROM user WHERE EmailAddress IN "+SQL_CLAUSE_EMAIL;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try (Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database"))
         { Statement st =connection.createStatement();
-            ResultSet rs = st.executeQuery(strQuery);
+            rs = st.executeQuery(strQuery);
             rs.next();
-            String Countrow = rs.getString(1);
-            if (Countrow.equals("0")){return true;}else {return false;}
-
         }catch (SQLException e)
         {printSQLExeception(e);}
-
+        // checks result if row > 0 , if greater than 0 we have dupe email
+        Countrow = rs.getString(1);
+        if (Countrow.equals("0")){return true;}else {return false;}
     }
 
 
