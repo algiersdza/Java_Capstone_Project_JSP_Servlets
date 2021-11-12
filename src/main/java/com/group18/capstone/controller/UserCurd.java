@@ -10,7 +10,30 @@ public class UserCurd {
     private String EmailAddress;
     private String Role;
 
-    public UserCurd(int UserID, String FirstName, String LastName, String UserName, String Password, String EmailAddress, String Role) {
+    public UserCurd(int UserID, String firstName, String lastName, String userName, String password, String emailAddress, String role) {
+        super();
+        this.UserID = UserID;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.UserName = userName;
+        this.Password = password;
+        this.EmailAddress = emailAddress;
+        this.Role = role;
+    }
+
+    public UserCurd(String firstName, String lastName, String userName, String password, String emailAddress, String role) {
+        super();
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.UserName = userName;
+        this.Password = password;
+        this.EmailAddress = emailAddress;
+        this.Role = role;
+    }
+
+    public UserCurd(int userID, String role) {
+        this.UserID = userID;
+        this.Role = role;
     }
 
     public int getUserID() {

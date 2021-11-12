@@ -5,7 +5,9 @@
   Time: 12:20 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
@@ -25,7 +27,7 @@
         </div>
 
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list"
+            <li><a href="<%=request.getContextPath()%>/admin.jsp"
                    class="nav-link">Users</a></li>
         </ul>
 
@@ -33,6 +35,7 @@
             <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
                 <input type="submit" value="Sign Out">
             </form>
+        </div>
     </nav>
 </header>
 <br>
@@ -73,25 +76,24 @@ Welcome ${UserName}
             </thead>
             <tbody>
 
-            <c:forEach var="userCrud" items="${listUserCrud}">
+            <c:forEach var="user" items="${listUser}">
 
                 <tr>
-                    <td><c:out value="${userCrud.UserID}" /></td>
-                    <td><c:out value="${userCrud.FirstName}" /></td>
-                    <td><c:out value="${userCrud.LastName}" /></td>
-                    <td><c:out value="${userCrud.UserName}" /></td>
-                    <td><c:out value="${userCrud.Password}" /></td>
-                    <td><c:out value="${userCrud.EmailAddress}" /></td>
-                    <td><c:out value="${userCrud.Role}" /></td>
-                    <td><a href="edit?id=<c:out value='${userCrud.id}' />">Edit</a>
+                    <td><c:out value="${user.UserID}" /></td>
+                    <td><c:out value="${user.FirstName}" /></td>
+                    <td><c:out value="${user.LastName}" /></td>
+                    <td><c:out value="${user.UserName}" /></td>
+                    <td><c:out value="${user.Password}" /></td>
+                    <td><c:out value="${user.EmailAddress}" /></td>
+                    <td><c:out value="${user.Role}" /></td>
+                    <td><a href="edit?id=<c:out value='${user.UserID}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; <a
-                                href="delete?id=<c:out value='${userCrud.id}' />">Delete</a></td>
+                                href="delete?id=<c:out value='${user.UserID}' />">Delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
-</div>
 </div>
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>

@@ -12,14 +12,14 @@ public class CurdDao {
     private String jdbcUsername = "root";
     private String jdbcPassword = "CST2355Database";
 
-    private static final String INSERT_USER_SQL = "INSERT INTO user" + "  (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES "
+    private static final String INSERT_USER_SQL = "INSERT INTO user.user" + "  (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES "
             + " (?, ?, ?, ?, ?, ?);";
 
     private static final String SELECT_USER_BY_ID = "SELECT UserID, FirstName, UserName, Password, EmailAddress, Role FROM" +
-            " user WHERE UserID = ?";
-    private static final String SELECT_ALL_USER = "SELECT * FROM user";
-    private static final String DELETE_USER_SQL = "DELETE from user WHERE UserID = ?;";
-    private static final String UPDATE_USER_SQL = "UPDATE user SET Role = ? WHERE UserID = ?;";
+            " user.user WHERE UserID = ?";
+    private static final String SELECT_ALL_USER = "SELECT * FROM user.user";
+    private static final String DELETE_USER_SQL = "DELETE from user.user WHERE UserID = ?;";
+    private static final String UPDATE_USER_SQL = "UPDATE user.user SET Role = ? WHERE UserID = ?;";
 
     public CurdDao(){}
 
