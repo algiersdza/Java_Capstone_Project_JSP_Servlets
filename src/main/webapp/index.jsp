@@ -33,7 +33,7 @@
                 <table id="LOGIN-TABLE">
                     <tbody>
                     <tr><td><label for="Username-Login">UserName: </label><input type="text" id ="Username-Login" name="UserName" placeholder="Enter your username"></td></tr>
-                    <tr><td><label for="Password-Login">Password: </label><input type="text" id="Password-Login" name="Password" placeholder="Enter your password"></td></tr>
+                    <tr><td><label for="Password-Login">Password: </label><input type="password" id="Password-Login" name="Password" placeholder="Enter your password"></td></tr>
                     <tr><td><input type="submit" value="Login"></td></tr>
                     </tbody>
                 </table>

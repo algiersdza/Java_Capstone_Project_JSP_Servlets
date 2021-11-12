@@ -26,9 +26,11 @@ public class LoginServlet extends HttpServlet {
         UserLogin userLogin = new UserLogin();
         userLogin.setUserName(UserName);
         userLogin.setPassword(Password);
-
+        String currentUser = userLogin.getUserName();
         try {
             if (userDao.isLoginCorrect(userLogin)){
+                HttpSession session = request.getSession();
+                session.setAttribute("UserName",currentUser);
                 response.sendRedirect("admin.jsp");
             }else {
                 response.sendRedirect("noaccount.jsp");

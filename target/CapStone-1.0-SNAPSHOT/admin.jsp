@@ -14,9 +14,20 @@
 <link rel="stylesheet" href="style.css"/>
 <body>
 <div class="TOP-HEAD-ADMIN">
+    <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
+            <input type="submit" value="Sign Out">
+    </form>
+
+    <%
+        if (session.getAttribute("UserName")== null){
+            response.sendRedirect("index.jsp");
+        }
+    %>
     <h1>Login Successful!</h1>
-    <h2>Welcome admin</h2>
+    Welcome ${UserName}
+   <!-- <h2>Welcome</h2> -->
     <p>Below you can display, add, modify and edit users</p>
+    <a href="index.jsp">Go back to index page</a>
 </div>
 </body>
 </html>
