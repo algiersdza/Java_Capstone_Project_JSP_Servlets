@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="style.css"/>
 <body>
 <div class="TOP-HEAD-no-account">
-    <h1>We did not find your information in your database</h1>
+    <h1>We did not find your information in our database</h1>
     <h2>Please consider making an account.</h2>
     <h3>If you wish to recover your password<a href="forgotrequest.jsp">Click here</a></h3>
     <a href="signup.jsp">Go to the sign up page</a>

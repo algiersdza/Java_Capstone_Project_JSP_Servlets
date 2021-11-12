@@ -6,8 +6,51 @@ import com.group18.capstone.controller.UserForgot;
 import com.group18.capstone.controller.UserLogin;
 import com.group18.capstone.controller.User;
 
+// db name is user
+// mysql root
+// password: CST2355Database
+
+//CREATE TABLE IF NOT EXISTS `user`.`user` (
+//                                             `UserID` int(3) AUTO_INCREMENT NOT NULL,
+//                                             `FirstName` VARCHAR(45) DEFAULT NULL,
+//                                             `LastName` VARCHAR(45) DEFAULT NULL,
+//                                             `UserName` VARCHAR(45) DEFAULT NULL,
+//                                             `Password` VARCHAR(45) DEFAULT NULL,
+//                                             `EmailAddress` VARCHAR(45) DEFAULT NULL,
+//                                             `Role` VARCHAR(45) DEFAULT 'user' NULL,
+//                                             PRIMARY KEY (UserID))
+//    ENGINE = InnoDB DEFAULT CHARSET =utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+//
+//INSERT INTO `user`.user (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES
+//                        ('Root','Admin','AdminSys','iamroot','root@mail.com','admin');
+
+
+
 
 public class UserDao {
+    // is user admin?
+
+    public boolean isAdmin(UserLogin userLogin) throws ClassNotFoundException, SQLException {
+        String role;
+        Class.forName("com.mysql.jdbc.Driver");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+             PreparedStatement preparedStatement = connection.prepareStatement
+                     ("SELECT Role FROM user.user WHERE UserName = ? AND Password = ?")) {
+            preparedStatement.setString(1, userLogin.getUserName());
+            preparedStatement.setString(2, userLogin.getPassword());
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                role = rs.getString("Role");
+                if (role.equals("user")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    }
+
     // password recovery
     public String[] recoverPassword(UserForgot userForgot) throws ClassNotFoundException, SQLException{
 
@@ -32,7 +75,7 @@ public class UserDao {
             }
 
         }catch (SQLException e){
-            printSQLExeception(e);
+            printSQLException(e);
         }
 
         return new String[] {username,password};
@@ -51,7 +94,7 @@ public class UserDao {
             ResultSet rs = preparedStatement.executeQuery();
             status = rs.next();
         }catch (SQLException e){
-            printSQLExeception(e);
+            printSQLException(e);
         }
         return status;
     }
@@ -91,12 +134,12 @@ public class UserDao {
             result = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            printSQLExeception(e);
+            printSQLException(e);
         }
         return result;
     }
 
-    private void printSQLExeception (SQLException error){
+    private void printSQLException(SQLException error){
         for (Throwable e : error) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);

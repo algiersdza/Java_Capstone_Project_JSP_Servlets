@@ -11,23 +11,88 @@
 <meta charset="UTF-8">
 <title>Admin Page</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
 <body>
-<div class="TOP-HEAD-ADMIN">
-    <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
-            <input type="submit" value="Sign Out">
-    </form>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark"
+         style="background-color: rgb(1, 1, 24)">
+        <div>
+            <a href="https://www.xadmin.net" class="navbar-brand"> Restco
+                Admin Management</a>
+        </div>
 
-    <%
-        if (session.getAttribute("UserName")== null){
-            response.sendRedirect("index.jsp");
-        }
-    %>
-    <h1>Login Successful!</h1>
-    Welcome ${UserName}
-   <!-- <h2>Welcome</h2> -->
-    <p>Below you can display, add, modify and edit users</p>
-    <a href="index.jsp">Go back to index page</a>
+        <ul class="navbar-nav">
+            <li><a href="<%=request.getContextPath()%>/list"
+                   class="nav-link">Users</a></li>
+        </ul>
+
+        <div class="TOP-HEAD-ADMIN">
+            <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
+                <input type="submit" value="Sign Out">
+            </form>
+        </div>
+    </nav>
+</header>
+<br>
+
+
+<%
+    if (session.getAttribute("UserName")== null){
+        response.sendRedirect("index.jsp");
+    }
+%>
+<h1>Login Successful!</h1>
+Welcome ${UserName}
+<!-- <h2>Welcome</h2> -->
+<p>Below you can display, add and edit users</p>
+
+<div class="row">
+    <div class="container">
+        <h3 class="text-center">List of Users</h3>
+        <hr>
+        <div class="container text-left">
+
+            <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add
+                New User</a>
+        </div>
+        <br>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>UserID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Email Address</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <c:forEach var="userCrud" items="${listUserCrud}">
+
+                <tr>
+                    <td><c:out value="${userCrud.UserID}" /></td>
+                    <td><c:out value="${userCrud.FirstName}" /></td>
+                    <td><c:out value="${userCrud.LastName}" /></td>
+                    <td><c:out value="${userCrud.UserName}" /></td>
+                    <td><c:out value="${userCrud.Password}" /></td>
+                    <td><c:out value="${userCrud.EmailAddress}" /></td>
+                    <td><c:out value="${userCrud.Role}" /></td>
+                    <td><a href="edit?id=<c:out value='${userCrud.id}' />">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp; <a
+                                href="delete?id=<c:out value='${userCrud.id}' />">Delete</a></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
+<footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

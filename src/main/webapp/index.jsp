@@ -22,7 +22,7 @@
 <body>
 <div class="TOP-HEAD-INDEX">
     <img id="LOGO-INDEX" src="Images/logo.png" width = "300" height="200">
-    <h3>Restaurant Management Operations Index Page</h3>
+    <h3>RestCo</h3>
         <p>Welcome! To begin your adventure with us you are required to have an account.</p>
 </div>
 
@@ -52,5 +52,6 @@
         </fieldset>
     </div>
 </div>
+<footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

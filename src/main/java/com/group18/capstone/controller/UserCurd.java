@@ -1,8 +1,6 @@
 package com.group18.capstone.controller;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class UserCurd {
 
     private int UserID;
     private String FirstName;
@@ -11,6 +9,9 @@ public class User implements Serializable {
     private String Password;
     private String EmailAddress;
     private String Role;
+
+    public UserCurd(int UserID, String FirstName, String LastName, String UserName, String Password, String EmailAddress, String Role) {
+    }
 
     public int getUserID() {
         return UserID;

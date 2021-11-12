@@ -29,9 +29,18 @@ public class LoginServlet extends HttpServlet {
         String currentUser = userLogin.getUserName();
         try {
             if (userDao.isLoginCorrect(userLogin)){
-                HttpSession session = request.getSession();
-                session.setAttribute("UserName",currentUser);
-                response.sendRedirect("admin.jsp");
+                if (userDao.isAdmin(userLogin)){
+                    //return normal page
+                    HttpSession session = request.getSession();
+                    session.setAttribute("UserName",currentUser);
+                    response.sendRedirect("userpage.jsp");
+                }else {
+                    //return admin page
+                    HttpSession session = request.getSession();
+                    session.setAttribute("UserName",currentUser);
+                    response.sendRedirect("admin.jsp");
+                }
+
             }else {
                 response.sendRedirect("noaccount.jsp");
             }
