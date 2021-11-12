@@ -1,13 +1,14 @@
-package com.group18.capstone.controller;
+package com.group18.capstone.servlet;
 
+import com.group18.capstone.controller.UserEmail;
 import com.group18.capstone.dao.UserDao;
-import com.group18.capstone.model.User;
+import com.group18.capstone.controller.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 
 @WebServlet(name = "UserRegister", value = "/UserRegister")
 public class UserRegister extends HttpServlet {
@@ -28,6 +29,7 @@ public class UserRegister extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = new User();
+        UserEmail userEmail = new UserEmail();
 
         String FirstName = request.getParameter("FirstName");
         String LastName = request.getParameter("LastName");
@@ -36,25 +38,32 @@ public class UserRegister extends HttpServlet {
         String EmailAddress = request.getParameter("EmailAddress");
         // email verification
 
+        userEmail.setEmailAddress(EmailAddress);
 
-
-
-        user.setFirstName(FirstName);
-        user.setLastName(LastName);
-        user.setUserName(UserName);
-        user.setPassword(Password);
-        user.setEmailAddress(EmailAddress);
-        // pass the user info to sql
         try {
-            userDao.registerUser(user);
-        } catch (ClassNotFoundException e) {
+            // if email is already present in the database return singup failed
+            if (userDao.checkEmailUser(userEmail)){
+                response.sendRedirect("signupfailed.jsp");
+            }else {
+                user.setFirstName(FirstName);
+                user.setLastName(LastName);
+                user.setUserName(UserName);
+                user.setPassword(Password);
+                user.setEmailAddress(EmailAddress);
+                // pass the user info to sql
+                try {
+                    userDao.registerUser(user);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // to redirect to JSP page after registering.
+                response.sendRedirect("signupsuccess.jsp");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        PrintWriter out = response.getWriter();
-        out.println("<p>"+"email sent"+"<p>");
 
-        // to redirect to JSP page after registering.
-        response.sendRedirect("index.jsp");
+
     }
 }

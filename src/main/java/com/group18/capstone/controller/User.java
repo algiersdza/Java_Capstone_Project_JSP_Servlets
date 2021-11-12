@@ -1,4 +1,4 @@
-package com.group18.capstone.model;
+package com.group18.capstone.controller;
 
 import java.io.Serializable;
 

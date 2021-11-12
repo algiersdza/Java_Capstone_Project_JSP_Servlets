@@ -28,18 +28,15 @@
 
 <div id="TOP-WRAP-INDEX">
     <div class="SIGN-IN-INDEX">
-        <form class="SIGN-IN-FORM">
+        <form class="SIGN-IN-FORM" action="<%= request.getContextPath()%>/LoginServlet" method="post">
             <fieldset>
                 <table id="LOGIN-TABLE">
                     <tbody>
-                    <tr><td><input type="text" id = "Username-Login" placeholder="Enter your username"></td></tr>
-                    <tr><td><input type="text" id="Password-Login" placeholder="Enter your password"></td></tr>
+                    <tr><td><label for="Username-Login">UserName: </label><input type="text" id ="Username-Login" name="UserName" placeholder="Enter your username"></td></tr>
+                    <tr><td><label for="Password-Login">Password: </label><input type="text" id="Password-Login" name="Password" placeholder="Enter your password"></td></tr>
+                    <tr><td><input type="submit" value="Login"></td></tr>
                     </tbody>
                 </table>
-                <p>
-                    <!-- or??? <a href="Admin">Login</a>  -->
-                    <a href="admin.jsp">Login</a>
-                </p>
                 <p>
                     <a href="forgotrequest.jsp">Forgot password</a>
                 </p>

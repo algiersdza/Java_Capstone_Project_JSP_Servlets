@@ -29,7 +29,7 @@
                     <tbody>
                     <tr><td><label for="FirstName-Sign-up">First Name: </label> <input type="text" id="FirstName-Sign-up" name="FirstName" placeholder="Enter your First Name"></td></tr>
                     <tr><td><label for="LastName-Sign-up"></label>Last Name: <input type="text" id="LastName-Sign-up" name="LastName" placeholder="Enter your Last Name"></td></tr>
-                    <tr><td><label for = "Username-Sign-up">User Name: </label><input type="text" id = "Username-Sign-up" name="UserName" placeholder="Enter your username"></td></tr>
+                    <tr><td><label for ="Username-Sign-up">User Name: </label><input type="text" id = "Username-Sign-up" name="UserName" placeholder="Enter your username"></td></tr>
                     <tr><td><label for="Password-Sign-up">Password: </label><input type="password" id="Password-Sign-up" name="Password" placeholder="Enter your password"></td></tr>
                     <tr><td><label for="Email-Sign-up">Email: </label><input type="email" id="Email-Sign-up" name="EmailAddress" placeholder="Enter your email"></td></tr>
                     <tr><td><input type="submit" value="Register"></td></tr>
@@ -38,6 +38,7 @@
             </fieldset>
         </form>
     </div>
+    <a href="index.jsp">Index Page</a>
 </div>
 </body>
 </html>

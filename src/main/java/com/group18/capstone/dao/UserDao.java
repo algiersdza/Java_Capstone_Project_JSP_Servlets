@@ -1,34 +1,76 @@
 package com.group18.capstone.dao;
 import java.sql.*;
 
-import com.group18.capstone.model.User;
+import com.group18.capstone.controller.UserEmail;
+import com.group18.capstone.controller.UserForgot;
+import com.group18.capstone.controller.UserLogin;
+import com.group18.capstone.controller.User;
 
 
 public class UserDao {
-    //email verfication
+    // password recovery
+    public String[] recoverPassword(UserForgot userForgot) throws ClassNotFoundException, SQLException{
 
-    public Boolean checkEmailUser (String email) throws SQLException {
-        String result="";
-        String strQuery = "SELECT COUNT(*) FROM user.user where EmailAddress='"+email+"'";
-        String Countrow;
-        ResultSet rs = null;
+        String password = null;
+        String username = null;
+        Class.forName("com.mysql.jdbc.Driver");
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT UserName, Password FROM user.user WHERE FirstName = ? AND LastName = ? AND EmailAddress = ?")){
+            preparedStatement.setString(1, userForgot.getFirstName());
+            preparedStatement.setString(2, userForgot.getLastName());
+            preparedStatement.setString(3, userForgot.getEmailAddress());
 
-//        String CHECK_EMAIL_SQL = "use user;" +
-//        "SELECT * FROM user WHERE EmailAddress IN "+SQL_CLAUSE_EMAIL;
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database"))
-        { Statement st =connection.createStatement();
-            rs = st.executeQuery(strQuery);
-            rs.next();
-        }catch (SQLException e)
-        {printSQLExeception(e);}
-        // checks result if row > 0 , if greater than 0 we have dupe email
-        Countrow = rs.getString(1);
-        if (Countrow.equals("0")){return true;}else {return false;}
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                password = rs.getString("Password");
+                username = rs.getString("UserName");
+
+//                userForgot.setPassword(password);
+//                userForgot.setUserName(username);
+            }
+
+        }catch (SQLException e){
+            printSQLExeception(e);
+        }
+
+        return new String[] {username,password};
     }
 
 
+    // user login works.
+    public boolean isLoginCorrect(UserLogin userLogin) throws ClassNotFoundException, SQLException {
+        boolean status = false;
+        Class.forName("com.mysql.jdbc.Driver");
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE UserName = ? AND Password = ?")){
+            preparedStatement.setString(1, userLogin.getUserName());
+            preparedStatement.setString(2, userLogin.getPassword());
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            status = rs.next();
+        }catch (SQLException e){
+            printSQLExeception(e);
+        }
+        return status;
+    }
 
+    //email verification works.
+    public boolean checkEmailUser (UserEmail userEmail) throws ClassNotFoundException,SQLException {
+        boolean status = false;
+        Class.forName("com.mysql.jdbc.Driver");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE EmailAddress = ?")) {
+            preparedStatement.setString(1, userEmail.getEmailAddress());
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            status = rs.next();
+            return status;
+        }
+    }
+
+    // register user works.
     public int registerUser (User user) throws ClassNotFoundException {
         String INSERT_INTO_SQL = "INSERT INTO user.user" + "(FirstName, LastName, UserName, Password, EmailAddress) VALUES "
                 + "(?,?,?,?,?);";
@@ -54,8 +96,8 @@ public class UserDao {
         return result;
     }
 
-    private void printSQLExeception(SQLException error) {
-        for (Throwable e: error) {
+    private void printSQLExeception (SQLException error){
+        for (Throwable e : error) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);
                 System.err.println("SQLState: " + ((SQLException) e).getSQLState());
@@ -69,6 +111,4 @@ public class UserDao {
             }
         }
     }
-
 }
-

@@ -17,13 +17,13 @@
     <h1>To retrieve your password please answer the following questions:</h1>
 </div>
 <div class="FORGOT-TABLE">
-    <form class="FORM-FORGOT" method="post">
+    <form class="FORM-FORGOT" action="<%= request.getContextPath()%>/RecoverServlet" method="post">
         <fieldset>
             <table id="FORGOT-PASSWORD-TABLE">
-                <tr><td><label for="FirstName-Forgot">First Name: </label><input type="text" id="FirstName-Forgot" placeholder="First Name?"></td></tr>
-                <tr><td><label for="LastName-Forgot">Last Name: </label><input type="text" id="LastName-Forgot" placeholder="Last Name?"></td></tr>
-                <tr><td><label for="Email-Forgot">Email Address: </label><input type="email" id="Email-Forgot" placeholder="Email Address?"></td></tr>
-                <tr><td><button>Submit Request</button></td></tr>
+                <tr><td><label for="FirstName-Forgot">First Name: </label><input type="text" id="FirstName-Forgot" name="FirstName" placeholder="First Name?"></td></tr>
+                <tr><td><label for="LastName-Forgot">Last Name: </label><input type="text" id="LastName-Forgot" name="LastName" placeholder="Last Name?"></td></tr>
+                <tr><td><label for="Email-Forgot">Email Address: </label><input type="email" id="Email-Forgot" name="EmailAddress" placeholder="Email Address?"></td></tr>
+                <tr><td><input type="submit" value="Recover password"></td></tr>
             </table>
         </fieldset>
     </form>
