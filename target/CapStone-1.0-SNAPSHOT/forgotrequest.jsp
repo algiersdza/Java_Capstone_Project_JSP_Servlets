@@ -5,28 +5,59 @@
   Time: 12:21 AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
 <title>Forgot Password Page</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
 <body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark"
+         style="background-color: rgb(1, 1, 24)">
+        <div>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Restco
+                Admin Management</a>
+        </div>
+        <div >
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/index.jsp" class="nav-link">Sign In
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/signup.jsp" class="nav-link">Register
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
 <div class="TOP-HEAD-FORGOT">
-    <h1>To retrieve your password please answer the following questions:</h1>
+    <h3 class="text-center">To retrieve your password please answer the following questions:</h3>
 </div>
-<div class="FORGOT-TABLE">
+<div class="container">
     <form class="FORM-FORGOT" action="<%= request.getContextPath()%>/RecoverServlet" method="post">
         <fieldset>
-            <table id="FORGOT-PASSWORD-TABLE">
-                <tr><td><label for="FirstName-Forgot">First Name: </label><input type="text" id="FirstName-Forgot" name="FirstName" placeholder="First Name?"></td></tr>
-                <tr><td><label for="LastName-Forgot">Last Name: </label><input type="text" id="LastName-Forgot" name="LastName" placeholder="Last Name?"></td></tr>
-                <tr><td><label for="Email-Forgot">Email Address: </label><input type="email" id="Email-Forgot" name="EmailAddress" placeholder="Email Address?"></td></tr>
-                <tr><td><input type="submit" value="Recover password"></td></tr>
+            <table class="table table-bordered">
+                <tr><th><label for="FirstName-Forgot">First Name: </label><input type="text" id="FirstName-Forgot" name="FirstName" placeholder="First Name?"></th></tr>
+                <tr><th><label for="LastName-Forgot">Last Name: </label><input type="text" id="LastName-Forgot" name="LastName" placeholder="Last Name?"></th></tr>
+                <tr><th><label for="Email-Forgot">Email Address: </label><input type="email" id="Email-Forgot" name="EmailAddress" placeholder="Email Address?"></th></tr>
+                <tr><th><input type="submit" value="Recover password" class="btn btn-success"></th></tr>
             </table>
         </fieldset>
     </form>
 </div>
+<footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

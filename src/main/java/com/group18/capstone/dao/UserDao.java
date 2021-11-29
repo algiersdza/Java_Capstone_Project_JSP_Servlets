@@ -28,12 +28,18 @@ import com.group18.capstone.controller.User;
 
 
 public class UserDao {
+    private String jdbcURL = "jdbc:mysql://localhost:3306/user?useSSL=false";
+    private String jdbcUsername = "root";
+    private String jdbcPassword = "CST2355Database";
+
+
+
     // is user admin?
 
     public boolean isAdmin(UserLogin userLogin) throws ClassNotFoundException, SQLException {
         String role;
         Class.forName("com.mysql.jdbc.Driver");
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
              PreparedStatement preparedStatement = connection.prepareStatement
                      ("SELECT Role FROM user.user WHERE UserName = ? AND Password = ?")) {
             preparedStatement.setString(1, userLogin.getUserName());
@@ -57,7 +63,7 @@ public class UserDao {
         String password = null;
         String username = null;
         Class.forName("com.mysql.jdbc.Driver");
-        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try(Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
             PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT UserName, Password FROM user.user WHERE FirstName = ? AND LastName = ? AND EmailAddress = ?")){
             preparedStatement.setString(1, userForgot.getFirstName());
@@ -86,7 +92,7 @@ public class UserDao {
     public boolean isLoginCorrect(UserLogin userLogin) throws ClassNotFoundException, SQLException {
         boolean status = false;
         Class.forName("com.mysql.jdbc.Driver");
-        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try(Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE UserName = ? AND Password = ?")){
             preparedStatement.setString(1, userLogin.getUserName());
             preparedStatement.setString(2, userLogin.getPassword());
@@ -103,7 +109,7 @@ public class UserDao {
     public boolean checkEmailUser (UserEmail userEmail) throws ClassNotFoundException,SQLException {
         boolean status = false;
         Class.forName("com.mysql.jdbc.Driver");
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE EmailAddress = ?")) {
             preparedStatement.setString(1, userEmail.getEmailAddress());
             System.out.println(preparedStatement);
@@ -121,7 +127,7 @@ public class UserDao {
 
         Class.forName("com.mysql.jdbc.Driver");
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useSSL=false", "root", "CST2355Database");
+        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_SQL)) {
             //preparedStatement.setInt(1,);
             preparedStatement.setString(1, user.getFirstName());

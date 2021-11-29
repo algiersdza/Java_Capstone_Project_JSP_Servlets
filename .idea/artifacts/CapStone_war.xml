@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="CapStone:war">
+  <artifact type="war" build-on-make="true" name="CapStone:war">
     <output-path>$PROJECT_DIR$/out/artifacts/CapStone_war</output-path>
     <root id="archive" name="CapStone_war.war">
       <element id="artifact" artifact-name="CapStone:war exploded" />

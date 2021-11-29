@@ -26,10 +26,10 @@
                 Admin Management</a>
         </div>
 
-        <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/admin.jsp"
-                   class="nav-link">Users</a></li>
-        </ul>
+<%--        <ul class="navbar-nav">--%>
+<%--            <li><a href="<%=request.getContextPath()%>/admin.jsp"--%>
+<%--                   class="nav-link">Users</a></li>--%>
+<%--        </ul>--%>
 
         <div class="TOP-HEAD-ADMIN">
             <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
