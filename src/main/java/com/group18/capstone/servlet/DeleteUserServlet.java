@@ -9,7 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "DeleteUserServlet", value = "/")
+@WebServlet(name = "DeleteUserServlet", value = "/DeleteUserServlet")
 public class DeleteUserServlet extends HttpServlet {
     UserDao userDao;
     public DeleteUserServlet(){}
@@ -20,8 +20,12 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin.jsp");
-        requestDispatcher.forward(request,response);
+        doPost(request,response);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int uid = Integer.parseInt(request.getParameter("id"));
         try {
             userDao.deleteUser(uid);
@@ -29,7 +33,6 @@ public class DeleteUserServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group18.capstone.controller.User;
-import com.group18.capstone.controller.UserCurd;
 
 // db name is user
 // mysql root
@@ -35,7 +34,7 @@ public class UserDao {
     private static final String INSERT_USER_SQL = "INSERT INTO user.user" + "  (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES "
             + " (?, ?, ?, ?, ?, ?);";
 
-    private static final String SELECT_USER_BY_ID = "SELECT UserID, FirstName, UserName, Password, EmailAddress, Role FROM" +
+    private static final String SELECT_USER_BY_ID = "SELECT UserID, FirstName, LastName, UserName, Password, EmailAddress, Role FROM" +
             " user.user WHERE UserID = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user.user";
     private static final String DELETE_USER_SQL = "DELETE from user.user WHERE UserID = ?;";
@@ -183,7 +182,7 @@ public class UserDao {
     public User getSingleUser(int UserID){
         User record = null;
         try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-                 PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ID);){
+                 PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ID)){
             statement.setInt(1, UserID);
             ResultSet rs= statement.executeQuery();
             while(rs.next()){
@@ -204,7 +203,6 @@ public class UserDao {
 
     // edit user
     public void updateUser(User user) throws SQLException {
-        boolean rowUpdated;
         try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_SQL);) {
             System.out.println("updated User:"+statement);

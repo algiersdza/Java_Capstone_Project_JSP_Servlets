@@ -93,19 +93,19 @@
                     </div>
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input class="form-control" name="LastName" value="${edit_user.lastName}" required>
+                        <input class="form-control" name="LastName" value="${edit_user.lastName }" required>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
-                        <input class="form-control" name="UserName" value="${edit_user.userName}" required>
+                        <input class="form-control" name="UserName" value="${edit_user.userName }" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input class="form-control" type="password" name="Password" value="${edit_user.password}" required>
+                        <input class="form-control" type="password" name="Password" value="${edit_user.password }" required>
                     </div>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input class="form-control" type="email" name="EmailAddress" value="${edit_user.emailAddress}" required>
+                        <input class="form-control" type="email" name="EmailAddress" value="${edit_user.emailAddress }" required>
                     </div>
                     <div class="form-group" >
                         <label>Role</label>

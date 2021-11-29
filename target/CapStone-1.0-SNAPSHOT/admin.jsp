@@ -124,7 +124,7 @@ Welcome ${UserName}
                     <td>${user.role}</td>
                     <td><a href="editform.jsp?id=${user.userID}">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; <a
-                                href="/DeleteUserServlet?id=${user.userID}">Delete</a></td>
+                                href="DeleteUserServlet?id=${user.userID}">Delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>
