@@ -1,6 +1,7 @@
 package com.group18.capstone.servlet;
 
-import com.group18.capstone.controller.UserLogin;
+import com.group18.capstone.controller.User;
+
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
@@ -23,7 +24,8 @@ public class LoginServlet extends HttpServlet {
 
         String UserName = request.getParameter("UserName");
         String Password = request.getParameter("Password");
-        UserLogin userLogin = new UserLogin();
+//        UserLogin userLogin = new UserLogin();
+        User userLogin = new User();
         userLogin.setUserName(UserName);
         userLogin.setPassword(Password);
         String currentUser = userLogin.getUserName();

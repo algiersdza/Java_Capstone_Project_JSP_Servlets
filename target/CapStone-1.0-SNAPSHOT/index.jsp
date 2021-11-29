@@ -55,7 +55,7 @@
 
 <div class="TOP-HEAD-INDEX">
     <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="200" alt="Logo_Index">
-    <h3>RestCo</h3>
+    <h3 class="text-center">RestCo</h3>
         <p>Welcome! To begin your adventure with us you are required to have an account.</p>
 </div>
 

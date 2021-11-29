@@ -2,7 +2,7 @@ package com.group18.capstone.controller;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User {
 
     private int UserID;
     private String FirstName;
@@ -11,6 +11,22 @@ public class User implements Serializable {
     private String Password;
     private String EmailAddress;
     private String Role;
+
+    public User(){}
+
+    public User(int userID, String firstName, String lastName, String userName, String password, String emailAddress, String role) {
+        this.UserID = userID;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.UserName = userName;
+        this.Password = password;
+        this.EmailAddress = emailAddress;
+        this.Role = role;
+    }
+
+    public User(int userID) {
+        this.UserID = userID;
+    }
 
     public int getUserID() {
         return UserID;
@@ -65,7 +81,4 @@ public class User implements Serializable {
     public void setEmailAddress(String EmailAddress) {
         this.EmailAddress = EmailAddress;
     }
-
-
-
 }

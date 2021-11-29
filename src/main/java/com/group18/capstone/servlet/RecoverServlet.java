@@ -1,7 +1,7 @@
 package com.group18.capstone.servlet;
 
-import com.group18.capstone.controller.UserEmail;
-import com.group18.capstone.controller.UserForgot;
+
+import com.group18.capstone.controller.User;
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
@@ -28,7 +28,7 @@ public class RecoverServlet extends HttpServlet {
         String LastName = request.getParameter("LastName");
         String EmailAddress = request.getParameter("EmailAddress");
 
-        UserForgot userForgot = new UserForgot();
+        User userForgot = new User();
         userForgot.setFirstName(FirstName);
         userForgot.setLastName(LastName);
         userForgot.setEmailAddress(EmailAddress);

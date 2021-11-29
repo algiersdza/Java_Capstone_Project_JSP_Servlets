@@ -47,7 +47,6 @@
 <div class="TOP-HEAD-SIGN-UP">
     <img id="LOGO-SIGN-UP" src="Images/logo.png" width = "300" height="200">
     <h3 class="text-center">Restaurant Management Operations Sign up Page</h3>
-        <p>Welcome! To begin your adventure with us you are required to have an account.</p>
 </div>
 
 <div id="TOP-WRAP-SIGN-UP">
