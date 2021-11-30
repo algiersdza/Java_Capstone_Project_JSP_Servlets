@@ -18,28 +18,37 @@
       crossorigin="anonymous">
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: rgb(1, 1, 24)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div>
-            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Restco
-                Admin Management</a>
-        </div>
-        <div >
-            <ul class="navbar-nav">
-                <li>
-                    <a href="<%=request.getContextPath()%>/index.jsp" class="nav-link">Sign In
-                    </a>
-                </li>
-            </ul>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand">
+                <img src="<c:url value='/Images/r-header.png'/>"
+                     width="30" height="30" class="d-inline-block align-top" alt=""> Restco
+                Admin Management
+            </a>
         </div>
         <div>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" >
                 <li>
                     <a href="<%=request.getContextPath()%>/signup.jsp" class="nav-link">Register
                     </a>
                 </li>
             </ul>
-
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/features.jsp" class="nav-link">Features
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/about.jsp" class="nav-link">About
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>

@@ -18,11 +18,13 @@
       crossorigin="anonymous">
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: rgb(1, 1, 24)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div>
-            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Restco
-                Admin Management</a>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand">
+                <img src="<c:url value='/Images/r-header.png'/>"
+                     width="30" height="30" class="d-inline-block align-top" alt=""> Restco
+                Admin Management
+            </a>
         </div>
         <div >
             <ul class="navbar-nav">
@@ -33,7 +35,7 @@
             </ul>
         </div>
         <div>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" >
                 <li>
                     <a href="<%=request.getContextPath()%>/signup.jsp" class="nav-link">Register
                     </a>
@@ -47,13 +49,31 @@
                     </a>
                 </li>
             </ul>
-
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/features.jsp" class="nav-link">Features
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/about.jsp" class="nav-link">About
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
 <div class="TOP-HEAD-no-account">
     <h3>You are signed out</h3>
     <h3>If you wish to test it<a href="admin.jsp"> Click here </a> to try to go to http://localhost:8080/CapStone_war_exploded/admin.jsp</h3>
+</div>
+<div class="TOP-HEAD-INDEX">
+    <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="300" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>

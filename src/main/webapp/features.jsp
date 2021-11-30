@@ -1,17 +1,19 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Ibrahim Hermouche
-  Date: 11/11/2021
-  Time: 11:54 PM
+  Date: 11/29/2021
+  Time: 10:41 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
-<title>Email Verification</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<head>
+    <title>Features</title>
+</head>
 <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -53,14 +55,6 @@
         <div>
             <ul class="navbar-nav">
                 <li>
-                    <a href="<%=request.getContextPath()%>/features.jsp" class="nav-link">Features
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <ul class="navbar-nav">
-                <li>
                     <a href="<%=request.getContextPath()%>/about.jsp" class="nav-link">About
                     </a>
                 </li>
@@ -68,9 +62,43 @@
         </div>
     </nav>
 </header>
-<div class="TOP-HEAD-success">
-    <h1>Email registered successfully!</h1>
-    <a href="index.jsp">Return to login page</a>
+<div class="container">
+    <p class="text-center">
+        Restco, a restaurant operations web application utilizes Java servlets and JSP to perform the following functions:
+        <br></p>
+        <ul>
+            <li>User Registration</li>
+            <li>Email Verification</li>
+            <li>Logged in Page different for roles</li>
+            <li>User Login/Logout</li>
+            <li>CRUD Operations</li>
+        </ul>
+
+    <p class="text-center">
+        User Registration can be done on the Register Page where it checks if the email is already registered in the database.
+        <br>
+        The Registered user is assigned a default "user" role, denoting that they are not an admin and upon sign in will
+        view a different page than an admin page.
+        <br>
+        <br>
+        Email verification is done with a servlet within both the Register JSP and Admin page.
+        <br>
+        <br>
+        Login is handled by a servlet which checks username and password in the database. It also checks if user attempting<br>
+        the log in is a user or admin,which will display the corresponding view(jsp).<br>
+        A user with "user" role will not see CRUD operations which an "admin" role will have CRUD operations on their page.
+        <br>
+        <br>
+        Logout is handled by a servlet which gets the session and invalidates it, any attempts to go into admin page will<br>
+        be rejected and redirects to index page.
+        <br>
+        <br>
+        CRUD operations are done on the admin page, which is viewable by an "admin" role only.<br>
+        The admin can create a new user, edit any fields of the user and delete the user.<br>
+        The admin page has a dynamic read of all users displayed on their page automatically on any CRUD operations.
+
+
+    </p>
 </div>
 <div class="TOP-HEAD-INDEX">
     <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">

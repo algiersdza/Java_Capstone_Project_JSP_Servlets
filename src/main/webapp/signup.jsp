@@ -19,11 +19,13 @@
 <script src=""></script>
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: rgb(1, 1, 24)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div>
-            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Restco
-                Admin Management</a>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand">
+                <img src="<c:url value='/Images/r-header.png'/>"
+                     width="30" height="30" class="d-inline-block align-top" alt=""> Restco
+                Admin Management
+            </a>
         </div>
         <div >
             <ul class="navbar-nav">
@@ -40,15 +42,26 @@
                     </a>
                 </li>
             </ul>
-
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/features.jsp" class="nav-link">Features
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/about.jsp" class="nav-link">About
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
-<div class="TOP-HEAD-SIGN-UP">
-    <img id="LOGO-SIGN-UP" src="Images/logo.png" width = "300" height="200">
-    <h3 class="text-center">Restaurant Management Operations Sign up Page</h3>
-</div>
-
+<h3 class="text-center">Restaurant Management Operations Sign up Page</h3>
 <div id="TOP-WRAP-SIGN-UP">
     <div class="container">
         <form class="SIGN-UP-FORM" action="<%= request.getContextPath()%>/UserRegister" method="post" >
@@ -66,6 +79,9 @@
             </fieldset>
         </form>
     </div>
+</div>
+<div class="TOP-HEAD-INDEX">
+    <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>

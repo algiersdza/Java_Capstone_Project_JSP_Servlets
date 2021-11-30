@@ -27,21 +27,17 @@
       crossorigin="anonymous">
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: rgb(1, 1, 24)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div>
-            <a href="index.jsp" class="navbar-brand"> Restco
-                Admin Management</a>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand">
+                <img src="<c:url value='/Images/r-header.png'/>"
+                     width="30" height="30" class="d-inline-block align-top" alt=""> Restco
+                Admin Management
+            </a>
         </div>
-
-<%--        <ul class="navbar-nav">--%>
-<%--            <li><a href="<%=request.getContextPath()%>/admin.jsp"--%>
-<%--                   class="nav-link">Users</a></li>--%>
-<%--        </ul>--%>
-
         <div class="TOP-HEAD-ADMIN">
-            <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
-                <input type="submit" value="Sign Out">
+            <form class="form-inline my-2 my-lg-0" action="<%= request.getContextPath()%>/LogoutServlet" method="post">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
             </form>
         </div>
     </nav>

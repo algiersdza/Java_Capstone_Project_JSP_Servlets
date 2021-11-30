@@ -18,14 +18,24 @@
       crossorigin="anonymous">
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: rgb(1, 1, 24)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div>
-            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Restco
-                Admin Management</a>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand">
+                <img src="<c:url value='/Images/r-header.png'/>"
+                     width="30" height="30" class="d-inline-block align-top" alt=""> Restco
+                Admin Management
+            </a>
         </div>
         <div >
             <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/index.jsp" class="nav-link">Sign In
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav" >
                 <li>
                     <a href="<%=request.getContextPath()%>/signup.jsp" class="nav-link">Register
                     </a>
@@ -39,15 +49,33 @@
                     </a>
                 </li>
             </ul>
-
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/features.jsp" class="nav-link">Features
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="<%=request.getContextPath()%>/about.jsp" class="nav-link">About
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
 <div class="TOP-HEAD-failed">
-    <h1>Email already registered in our database!</h1>
-    <h2>Please try again.</h2>
-    <h3>If you wish to recover your password<a href="forgotrequest.jsp"> Click here</a></h3>
+    <h3>Email already registered in our database!</h3>
+    <h5>Please try again.</h5>
+    <h5>If you wish to recover your password<a href="forgotrequest.jsp"> Click here</a></h5>
     <a href="signup.jsp">Or return to sign up page</a>
+</div>
+<div class="TOP-HEAD-INDEX">
+    <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
