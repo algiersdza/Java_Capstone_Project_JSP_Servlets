@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.group18.capstone.controller.Food" %>
+<%@ page import="com.group18.capstone.dao.FoodDao" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Ibrahim Hermouche
   Date: 11/12/2021
@@ -7,6 +9,11 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    FoodDao foodData = new FoodDao();
+    List<Food> foods = foodData.selectAllItems();
+    request.setAttribute("FOOD_LIST", foods);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
@@ -41,31 +48,115 @@
 <h1>User Page</h1>
 Welcome ${UserName}
 
+<p class="text-center">We welcome you to taste our delicious dishes prepared by the Michelin star recipients!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <h5 class="text-center">Select your order</h5>
+            <hr>
+            <br>
+            <form action="AddToCartServlet" method="post">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="food" items = "${FOOD_LIST}">
+                        <tr>
+                            <td>${food.itemName}</td>
+                            <td>${food.itemDesc}</td>
+                            <td>$${food.itemPrice}</td>
+                            <td><input type="number" min="0" name="quantity"></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <table class="table table-bordered">
+                    <button type="submit" class="btn btn-secondary">Add to cart</button>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <h5 class="text-center"></h5>
+            <hr>
+            <br>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+
+                    </thead>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <h5 class="text-center">Your Cart</h5>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Item added</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="checkout" items = "${CHECKOUT_LIST}">
+                    <tr>
+                        <td>${checkout.itemName}</td>
+                        <td>${checkout.amount}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-5">
+            <h5 class="text-center">Your total</h5>
+            <hr>
+            <form action="CheckOutServlet" method="post">
+                <table class="table table-sm table-borderless table-dark">
+                    <tbody>
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td>subtotal goes here</td>
+                    </tr>
+                    <tr>
+                        <td>Tax:</td>
+                        <td>tax goes here</td>
+                    </tr>
+                    <tr>
+                        <td>Total:</td>
+                        <td>total goes here</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <button type="submit" class="btn btn-secondary">Submit Order</button>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+
 <div class="container">
     <img src="<c:url value='/Images/logo.png'/>" id="Logo" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
-
-
-    <p class="text-center">We welcome you to taste our delicious dishes prepared by the Michelin star recipients!</p>
-<!-- tawfik-->
-<%--<div class="container">--%>
-<%--    <img src="<c:url value='/Images/Untitled-3.png'/>" id="star-taw1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
-<%--</div>--%>
-<%--<br>--%>
-<%--<br>--%>
-<%--<!-- usama-->--%>
-<%--<div class="row">--%>
-<%--    <img src="<c:url value='/Images/Untitled-4.png'/>" id="star-usa1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
-<%--<!-- mimi-->--%>
-<%--    <img src="<c:url value='/Images/Untitled-2.png'/>" id="star-mimi1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
-<%--</div>--%>
-<%--<br>--%>
-<%--<br>--%>
-<%--<!-- tawfik-->--%>
-<%--<div class="container">--%>
-<%--    <img src="<c:url value='/Images/Untitled-1.png'/>" id="star-taw2" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
-<%--</div>--%>
-
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

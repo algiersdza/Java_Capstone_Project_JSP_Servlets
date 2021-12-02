@@ -35,6 +35,14 @@
                 Admin Management
             </a>
         </div>
+        <div>
+            <ul class="navbar-nav" >
+                <li>
+                    <a href="<%=request.getContextPath()%>/admin-add-menu.jsp" class="nav-link">Add to menu
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="TOP-HEAD-ADMIN">
             <form class="form-inline my-2 my-lg-0" action="<%= request.getContextPath()%>/LogoutServlet" method="post">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
