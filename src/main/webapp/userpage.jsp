@@ -33,18 +33,39 @@
         </div>
     </nav>
 </header>
+<%
+    if (session.getAttribute("UserName")== null){
+        response.sendRedirect("index.jsp");
+    }
+%>
+<h1>User Page</h1>
+Welcome ${UserName}
 
-
-    <%
-        if (session.getAttribute("UserName")== null){
-            response.sendRedirect("index.jsp");
-        }
-    %>
-    <h1>Login Successful!</h1>
-    Welcome ${UserName}
-    <!-- <h2>Welcome</h2> -->
-    <p>You are a user role, not much to do here</p>
+<div class="container">
+    <img src="<c:url value='/Images/logo.png'/>" id="Logo" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
+
+
+    <p class="text-center">We welcome you to taste our delicious dishes prepared by the Michelin star recipients!</p>
+<!-- tawfik-->
+<%--<div class="container">--%>
+<%--    <img src="<c:url value='/Images/Untitled-3.png'/>" id="star-taw1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
+<%--</div>--%>
+<%--<br>--%>
+<%--<br>--%>
+<%--<!-- usama-->--%>
+<%--<div class="row">--%>
+<%--    <img src="<c:url value='/Images/Untitled-4.png'/>" id="star-usa1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
+<%--<!-- mimi-->--%>
+<%--    <img src="<c:url value='/Images/Untitled-2.png'/>" id="star-mimi1" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
+<%--</div>--%>
+<%--<br>--%>
+<%--<br>--%>
+<%--<!-- tawfik-->--%>
+<%--<div class="container">--%>
+<%--    <img src="<c:url value='/Images/Untitled-1.png'/>" id="star-taw2" width = "500" height="500" class="rounded mx-auto d-block" alt="Logo_Index">--%>
+<%--</div>--%>
+
 <footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

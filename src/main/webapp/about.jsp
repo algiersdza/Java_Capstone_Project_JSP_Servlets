@@ -74,6 +74,6 @@
 <div class="TOP-HEAD-INDEX">
     <img src="<c:url value='/Images/logo.png'/>" id="LOGO-INDEX" width = "300" height="200" class="rounded mx-auto d-block" alt="Logo_Index">
 </div>
-
+<footer><p><small>&copy;2021 copyright. All Right Reserved.</small></p></footer>
 </body>
 </html>

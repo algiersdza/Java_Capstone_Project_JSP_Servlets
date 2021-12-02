@@ -2,13 +2,13 @@ package com.group18.capstone.servlet;
 
 import com.group18.capstone.controller.User;
 
+import com.group18.capstone.controller.UserBuilder;
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
@@ -25,9 +25,9 @@ public class LoginServlet extends HttpServlet {
         String UserName = request.getParameter("UserName");
         String Password = request.getParameter("Password");
 //        UserLogin userLogin = new UserLogin();
-        User userLogin = new User();
-        userLogin.setUserName(UserName);
-        userLogin.setPassword(Password);
+        User userLogin = new UserBuilder().setUserName(UserName).setPassword(Password).createUser();
+//        userLogin.setUserName(UserName);
+//        userLogin.setPassword(Password);
         String currentUser = userLogin.getUserName();
         try {
             if (userDao.isLoginCorrect(userLogin)){
@@ -46,9 +46,7 @@ public class LoginServlet extends HttpServlet {
             }else {
                 response.sendRedirect("noaccount.jsp");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

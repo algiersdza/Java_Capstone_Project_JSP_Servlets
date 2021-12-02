@@ -70,9 +70,10 @@
 </header>
 <h3 class="text-center">RestCo</h3>
 <h5 class="text-center">Welcome! To begin your adventure with us you are required to have an account.</h5>
-<div>
-    <div class="container">
-        <form class="SIGN-IN-FORM" action="<%= request.getContextPath()%>/LoginServlet" method="post">
+<br>
+<br>
+<div class="container">
+        <form class="text-center" action="<%= request.getContextPath()%>/LoginServlet" method="post">
             <fieldset>
                 <table class="table table-bordered">
                     <tbody>
@@ -86,7 +87,7 @@
 <%--                </p>--%>
             </fieldset>
         </form>
-    </div>
+
 <!--    <div class="SIGN-UP-INDEX">
         <fieldset>
             <p>

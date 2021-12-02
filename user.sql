@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS `user`.`user` (
     ENGINE = InnoDB DEFAULT CHARSET =utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `user`.user (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES
-                        ('Root','Admin','AdminSys','iamroot','root@mail.com','admin');
+                        ('Root','Admin','root','iamroot','root@mail.com','admin');

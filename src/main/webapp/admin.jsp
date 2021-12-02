@@ -50,7 +50,7 @@
         response.sendRedirect("index.jsp");
     }
 %>
-<h1>Login Successful!</h1>
+<h1>Admin Page</h1>
 Welcome ${UserName}
 <!-- <h2>Welcome</h2> -->
 <p>Below you can display, add and edit users</p>

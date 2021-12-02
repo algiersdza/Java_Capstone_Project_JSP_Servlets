@@ -2,6 +2,7 @@ package com.group18.capstone.servlet;
 
 
 import com.group18.capstone.controller.User;
+import com.group18.capstone.controller.UserBuilder;
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
@@ -28,13 +29,13 @@ public class RecoverServlet extends HttpServlet {
         String LastName = request.getParameter("LastName");
         String EmailAddress = request.getParameter("EmailAddress");
 
-        User userForgot = new User();
-        userForgot.setFirstName(FirstName);
-        userForgot.setLastName(LastName);
-        userForgot.setEmailAddress(EmailAddress);
+        User userForgot = new UserBuilder().setFirstName(FirstName).setLastName(LastName).setEmailAddress(EmailAddress).createUser();
+//        userForgot.setFirstName(FirstName);
+//        userForgot.setLastName(LastName);
+//        userForgot.setEmailAddress(EmailAddress);
 
         //result from query is returned as string[]
-        // check if array is null ( meaning no result is retrieved from the query but it still returns "null,null"
+        // check if array is null ( meaning no result is retrieved from the query, but it still returns "null,null"
         try {
             String[] resultArray = userDao.recoverPassword(userForgot);
             boolean isNull = false;
@@ -46,16 +47,24 @@ public class RecoverServlet extends HttpServlet {
                     }
                 }
             }
-            if (isNull == false){
+            if (!isNull){
                 PrintWriter out = response.getWriter();
+                out.println("<html lang="+"\"en\""+">");
+                out.println("<meta charset="+"\"UTF-8\""+">");
+                out.println("<meta name="+"\"viewport\""+"content=\"width=device-width,initial-scale=1\""+">");
+                out.println("<head>"+"<title>"+"Recovery Sent"+"</title>"+"</head>");
+                out.println("<body>");
+                out.println("<h3"+" style="+"\"text-align:center\""+">"+"RestCo"+"</h3>");
+                out.println("<h3>"+"We sent the recovery information to your email.***(MOCKUP)***"+"</h3>");
                 out.println("<h2>"+"Your username and password are: " + Arrays.toString(resultArray) +"</h2>");
                 out.println("<a href ="+"index.jsp"+">Return to index page"+"</a>");
+                out.println("<footer>"+"<p>"+"<small>"+"©"+"2021 copyright."+" All Rights Reserved."+"</small>"+"</p>"+"</footer>");
+                out.println("</body>");
+                out.println("</html>");
             }else {
                 response.sendRedirect("noaccount.jsp");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

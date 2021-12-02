@@ -1,6 +1,7 @@
 package com.group18.capstone.servlet;
 
 import com.group18.capstone.controller.User;
+import com.group18.capstone.controller.UserBuilder;
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
@@ -27,7 +28,7 @@ public class AddUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = new User();
+
         PrintWriter out = response.getWriter();
 //        UserEmail userEmail = new UserEmail();
 
@@ -38,8 +39,8 @@ public class AddUserServlet extends HttpServlet {
         String EmailAddress = request.getParameter("EmailAddress");
         String Role = request.getParameter("Role");
         // email verification
-
-        user.setEmailAddress(EmailAddress);
+        User user = new UserBuilder().setEmailAddress(EmailAddress).createUser();
+//        user.setEmailAddress(EmailAddress);
 
         try {
             // if email is already present in the database return sign up failed
@@ -50,12 +51,13 @@ public class AddUserServlet extends HttpServlet {
                 out.println("</script>");
                 //response.sendRedirect("admin.jsp");
             }else {
-                user.setFirstName(FirstName);
-                user.setLastName(LastName);
-                user.setUserName(UserName);
-                user.setPassword(Password);
-                user.setEmailAddress(EmailAddress);
-                user.setRole(Role);
+                user = new UserBuilder().setFirstName(FirstName).setLastName(LastName).setUserName(UserName).setPassword(Password).setEmailAddress(EmailAddress).setRole(Role).createUser();
+//                user.setFirstName(FirstName);
+//                user.setLastName(LastName);
+//                user.setUserName(UserName);
+//                user.setPassword(Password);
+//                user.setEmailAddress(EmailAddress);
+//                user.setRole(Role);
                 // pass the user info to sql
                 userDao.addUser(user);
                 // to redirect to JSP page after registering.

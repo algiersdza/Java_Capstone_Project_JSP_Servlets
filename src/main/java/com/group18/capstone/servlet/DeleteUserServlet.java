@@ -1,8 +1,7 @@
 package com.group18.capstone.servlet;
 
-import com.group18.capstone.controller.User;
-import com.group18.capstone.dao.UserDao;
 
+import com.group18.capstone.dao.UserDao;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

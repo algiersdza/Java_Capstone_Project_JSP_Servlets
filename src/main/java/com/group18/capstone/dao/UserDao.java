@@ -5,54 +5,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group18.capstone.controller.User;
-
-// db name is user
-// mysql root
-// password: CST2355Database
-
-//CREATE TABLE IF NOT EXISTS `user`.`user` (
-//                                             `UserID` int(3) AUTO_INCREMENT NOT NULL,
-//                                             `FirstName` VARCHAR(45) DEFAULT NULL,
-//                                             `LastName` VARCHAR(45) DEFAULT NULL,
-//                                             `UserName` VARCHAR(45) DEFAULT NULL,
-//                                             `Password` VARCHAR(45) DEFAULT NULL,
-//                                             `EmailAddress` VARCHAR(45) DEFAULT NULL,
-//                                             `Role` VARCHAR(45) DEFAULT 'user' NULL,
-//                                             PRIMARY KEY (UserID))
-//    ENGINE = InnoDB DEFAULT CHARSET =utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-//
-//INSERT INTO `user`.user (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES
-//                        ('Root','Admin','AdminSys','iamroot','root@mail.com','admin');
-
-
-
+import com.group18.capstone.controller.UserBuilder;
 
 public class UserDao {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/user?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "CST2355Database";
+    // add new user | Called from admin page
     private static final String INSERT_USER_SQL = "INSERT INTO user.user" + "  (FirstName, LastName, UserName, Password, EmailAddress, Role) VALUES "
             + " (?, ?, ?, ?, ?, ?);";
 
+    // add new user | Called from UserRegister servlet.
+    private static final String INSERT_INTO_SQL = "INSERT INTO user.user" + "(FirstName, LastName, UserName, Password, EmailAddress) VALUES "
+            + "(?,?,?,?,?);";
+
+    // Email validation | Called from UserRegister servlet
+    private static final String IS_EMAIL_EXIST_SQL = "SELECT * FROM user.user WHERE EmailAddress = ?;";
+
+    // checks if user is admin or user | Called from UserRegister servlet | result will validate user for appropriate page to show
+    private static final String IS_USER_ADMIN_SQL = "SELECT Role FROM user.user WHERE UserName = ? AND Password = ?;";
+
+    // Login validation | Called from LoginServlet
+    private static final String IS_LOGIN_CORRECT_SQL = "SELECT * FROM user.user WHERE UserName = ? AND Password = ?;";
+
+    // returns username and password in a string array | Called from RecoverServlet
+    private static final String RECOVER_PASSWORD_SQL = "SELECT UserName, Password FROM user.user WHERE FirstName = ? AND LastName = ? AND EmailAddress = ?;";
+
+    // edit existing user (shows initial existing information in the edit fields) | Called from admin page
     private static final String SELECT_USER_BY_ID = "SELECT UserID, FirstName, LastName, UserName, Password, EmailAddress, Role FROM" +
             " user.user WHERE UserID = ?";
+
+    // show all users in admin page (List) | Called from admin page
     private static final String SELECT_ALL_USER = "SELECT * FROM user.user";
+
+    // deletes user from database and list | Called from admin page
     private static final String DELETE_USER_SQL = "DELETE from user.user WHERE UserID = ?;";
+
+    // used with SELECT_USER_BY_ID | Called from editform
     private static final String UPDATE_USER_SQL = "UPDATE user.user SET FirstName=?,LastName=?,UserName=?,Password=?,EmailAddress=?,Role = ? WHERE UserID = ?;";
 
-
-
     // is user admin?
-
     public boolean isAdmin(User userLogin) throws ClassNotFoundException, SQLException {
         String role;
-        Class.forName("com.mysql.jdbc.Driver");
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement
-                     ("SELECT Role FROM user.user WHERE UserName = ? AND Password = ?")) {
+         Connection singleCon = ConnectionDao.getSingleCon();
+        try (
+             PreparedStatement preparedStatement = singleCon.prepareStatement
+                     (IS_USER_ADMIN_SQL)) {
             preparedStatement.setString(1, userLogin.getUserName());
             preparedStatement.setString(2, userLogin.getPassword());
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 role = rs.getString("Role");
@@ -62,49 +60,40 @@ public class UserDao {
             }
             return false;
         }
-
     }
 
     // password recovery
     public String[] recoverPassword(User userForgot) throws ClassNotFoundException, SQLException{
-
         String password = null;
         String username = null;
-        Class.forName("com.mysql.jdbc.Driver");
-        try(Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-            PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT UserName, Password FROM user.user WHERE FirstName = ? AND LastName = ? AND EmailAddress = ?")){
+        try(Connection singleCon = ConnectionDao.getSingleCon();
+            PreparedStatement preparedStatement = singleCon.prepareStatement
+                    (RECOVER_PASSWORD_SQL)){
             preparedStatement.setString(1, userForgot.getFirstName());
             preparedStatement.setString(2, userForgot.getLastName());
             preparedStatement.setString(3, userForgot.getEmailAddress());
-
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 password = rs.getString("Password");
                 username = rs.getString("UserName");
-
 //                userForgot.setPassword(password);
 //                userForgot.setUserName(username);
             }
-
         }catch (SQLException e){
             printSQLException(e);
         }
-
         return new String[] {username,password};
     }
-
 
     // user login works.
     public boolean isLoginCorrect(User userLogin) throws ClassNotFoundException, SQLException {
         boolean status = false;
-        Class.forName("com.mysql.jdbc.Driver");
-        try(Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE UserName = ? AND Password = ?")){
+        try(Connection singleCon = ConnectionDao.getSingleCon();
+            PreparedStatement preparedStatement = singleCon.prepareStatement(IS_LOGIN_CORRECT_SQL)){
             preparedStatement.setString(1, userLogin.getUserName());
             preparedStatement.setString(2, userLogin.getPassword());
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             status = rs.next();
         }catch (SQLException e){
@@ -116,11 +105,10 @@ public class UserDao {
     //email verification works.
     public boolean checkEmailUser (User user) throws ClassNotFoundException,SQLException {
         boolean status = false;
-        Class.forName("com.mysql.jdbc.Driver");
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user.user WHERE EmailAddress = ?")) {
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(IS_EMAIL_EXIST_SQL)) {
             preparedStatement.setString(1, user.getEmailAddress());
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             status = rs.next();
             return status;
@@ -129,39 +117,31 @@ public class UserDao {
 
     // register user works.
     public int registerUser (User user) throws ClassNotFoundException {
-        String INSERT_INTO_SQL = "INSERT INTO user.user" + "(FirstName, LastName, UserName, Password, EmailAddress) VALUES "
-                + "(?,?,?,?,?);";
         int result = 0;
-
-        Class.forName("com.mysql.jdbc.Driver");
-
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_SQL)) {
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(INSERT_INTO_SQL)) {
             //preparedStatement.setInt(1,);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getUserName());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getEmailAddress());
-
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             result = preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             printSQLException(e);
         }
         return result;
     }
-// select all users to show on admin.jsp CRUD
 
+    // Below this line is all done within the admin.jsp
+    //-------------------------------------------------//
+    // select all users to show on admin.jsp CRUD
     public List<User> selectAllUsers() {
-
-        // using try-with-resources to avoid closing resources (boiler plate code)
         List<User> users = new ArrayList<>();
-        // Step 1: Establishing a Connection
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USER);) {
-            System.out.println(preparedStatement);
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(SELECT_ALL_USER)) {
+            //System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int UserID = rs.getInt("UserID");
@@ -171,20 +151,21 @@ public class UserDao {
                 String Password = rs.getString("Password");
                 String EmailAddress = rs.getString("EmailAddress");
                 String Role = rs.getString("Role");
-                users.add(new User(UserID,FirstName,LastName,UserName ,Password ,EmailAddress ,Role));
+                users.add(new UserBuilder().setUserID(UserID).setFirstName(FirstName).setLastName(LastName).setUserName(UserName).setPassword(Password).setEmailAddress(EmailAddress).setRole(Role).createUser());
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         return users;
     }
+
     // get a single user for the editform.jsp
     public User getSingleUser(int UserID){
         User record = null;
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-                 PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ID)){
-            statement.setInt(1, UserID);
-            ResultSet rs= statement.executeQuery();
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+                 PreparedStatement preparedStatement = singleCon.prepareStatement(SELECT_USER_BY_ID)){
+            preparedStatement.setInt(1, UserID);
+            ResultSet rs= preparedStatement.executeQuery();
             while(rs.next()){
                 int userID = rs.getInt("UserID");
                 String FirstName = rs.getString("FirstName");
@@ -193,7 +174,7 @@ public class UserDao {
                 String Password = rs.getString("Password");
                 String EmailAddress = rs.getString("EmailAddress");
                 String Role = rs.getString("Role");
-                record = new User(userID,FirstName,LastName,UserName ,Password ,EmailAddress ,Role);
+                record = new UserBuilder().setUserID(userID).setFirstName(FirstName).setLastName(LastName).setUserName(UserName).setPassword(Password).setEmailAddress(EmailAddress).setRole(Role).createUser();
             }
         }catch(Exception ex){
             ex.printStackTrace();
@@ -201,37 +182,35 @@ public class UserDao {
         return record;
     }
 
-    // edit user
+    // edit user, id can't be changed *WARNING*
     public void updateUser(User user) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_SQL);) {
-            System.out.println("updated User:"+statement);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getUserName());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getEmailAddress());
-            statement.setString(6, user.getRole());
-            statement.setInt(7, user.getUserID());
-            statement.executeUpdate();
-        }
-
-    }
-
-    // insert user
-    public int addUser(User user) throws SQLException {
-        int result = 0;
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(UPDATE_USER_SQL)) {
+            //System.out.println("updated User:"+preparedStatement);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getUserName());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getEmailAddress());
             preparedStatement.setString(6, user.getRole());
-            System.out.println(preparedStatement);
+            preparedStatement.setInt(7, user.getUserID());
             preparedStatement.executeUpdate();
+        }
+    }
 
+    // insert user
+    public int addUser(User user) throws SQLException {
+        int result = 0;
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(INSERT_USER_SQL)) {
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getUserName());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getEmailAddress());
+            preparedStatement.setString(6, user.getRole());
+            //System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -240,16 +219,14 @@ public class UserDao {
 
     // delete user
     public void deleteUser(int UserID) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-             PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL)) {
-            statement.setInt(1, UserID);
-            statement.execute();
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(DELETE_USER_SQL)) {
+            preparedStatement.setInt(1, UserID);
+            preparedStatement.execute();
         } catch (Exception e){
             e.printStackTrace();
         }
     }
-
-
     private void printSQLException(SQLException error){
         for (Throwable e : error) {
             if (e instanceof SQLException) {

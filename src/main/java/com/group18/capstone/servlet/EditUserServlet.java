@@ -1,6 +1,7 @@
 package com.group18.capstone.servlet;
 
 import com.group18.capstone.controller.User;
+import com.group18.capstone.controller.UserBuilder;
 import com.group18.capstone.dao.UserDao;
 
 import javax.servlet.*;
@@ -27,7 +28,7 @@ public class EditUserServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        user = new User();
+//        user = new UserBuilderDemo().createUser();
         int UserID;
         String FirstName,LastName,UserName,Password,EmailAddress,Role;
         UserID = Integer.parseInt(request.getParameter("UserID"));
@@ -37,7 +38,7 @@ public class EditUserServlet extends HttpServlet {
         Password = request.getParameter("Password");
         EmailAddress = request.getParameter("EmailAddress");
         Role = request.getParameter("Role");
-        user = new User(UserID,FirstName,LastName,UserName,Password,EmailAddress,Role);
+        user = new UserBuilder().setUserID(UserID).setFirstName(FirstName).setLastName(LastName).setUserName(UserName).setPassword(Password).setEmailAddress(EmailAddress).setRole(Role).createUser();
         try {
             userDao.updateUser(user);
             response.sendRedirect("admin.jsp");
