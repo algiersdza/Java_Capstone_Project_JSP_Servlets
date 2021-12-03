@@ -51,7 +51,7 @@
 </header>
 <!-- check if logged session is active -->
 <%
-    if (session.getAttribute("UserName")== null){
+    if (session.getAttribute("UserName")== null && session.getAttribute("Role") != "admin"){
         response.sendRedirect("index.jsp");
     }
 %>

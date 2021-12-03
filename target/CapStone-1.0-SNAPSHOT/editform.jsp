@@ -20,6 +20,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
+    if (session.getAttribute("UserName")== null && session.getAttribute("Role") != "admin"){
+        response.sendRedirect("index.jsp");
+    }
+%>
+
+<%
     int UserID = Integer.parseInt(request.getParameter("id"));
     UserDao usID = new UserDao();
     User record = usID.getSingleUser(UserID);

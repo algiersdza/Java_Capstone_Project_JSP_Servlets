@@ -29,17 +29,20 @@ public class LoginServlet extends HttpServlet {
 //        userLogin.setUserName(UserName);
 //        userLogin.setPassword(Password);
         String currentUser = userLogin.getUserName();
+        String currentUserRole = userLogin.getRole();
         try {
             if (userDao.isLoginCorrect(userLogin)){
                 if (userDao.isAdmin(userLogin)){
                     //return normal page
                     HttpSession session = request.getSession();
                     session.setAttribute("UserName",currentUser);
+                    session.setAttribute("Role",currentUserRole);
                     response.sendRedirect("userpage.jsp");
                 }else {
                     //return admin page
                     HttpSession session = request.getSession();
                     session.setAttribute("UserName",currentUser);
+                    session.setAttribute("Role",currentUserRole);
                     response.sendRedirect("admin.jsp");
                 }
 

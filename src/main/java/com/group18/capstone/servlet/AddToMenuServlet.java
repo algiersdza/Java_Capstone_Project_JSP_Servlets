@@ -38,8 +38,8 @@ public class AddToMenuServlet extends HttpServlet {
         try {
             foodDao.addFood(food);
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email Already Registered!');");
-            out.println("location='admin.jsp';");
+            out.println("alert('New food added!');");
+            out.println("location='admin-add-menu.jsp';");
             out.println("</script>");
             response.sendRedirect("admin-add-menu.jsp");
         } catch (SQLException e) {

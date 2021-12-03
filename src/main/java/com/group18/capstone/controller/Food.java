@@ -28,7 +28,7 @@ public class Food {
         return ItemDesc;
     }
 
-    public double getItemPrice() {
+    public float getItemPrice() {
         return ItemPrice;
     }
 

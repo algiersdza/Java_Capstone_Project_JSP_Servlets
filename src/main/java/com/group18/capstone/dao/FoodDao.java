@@ -1,9 +1,7 @@
 package com.group18.capstone.dao;
 
-import com.group18.capstone.controller.Food;
-import com.group18.capstone.controller.FoodBuilder;
-import com.group18.capstone.controller.User;
-import com.group18.capstone.controller.UserBuilder;
+import com.group18.capstone.controller.*;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +17,8 @@ public class FoodDao {
             + "(?,?,?);";
     private static final String DELETE_FOOD_SQL = "DELETE FROM user.food WHERE FoodID = ?;";
     private static final String SELECT_ALL_FOOD_SQL = "SELECT * FROM user.food;";
+    private static final String SELECT_FOOD_FOR_CHECKOUT_SQL = "SELECT * FROM user.food WHERE FoodID = ?;";
+    private static final String SELECT_PRICE_FOR_TOTAL_SQL = "SELECT ItemPrice FROM user.food WHERE FoodID =?;";
 
 
     public int addFood(Food food) throws SQLException {
@@ -66,6 +66,76 @@ public class FoodDao {
         return foods;
     }
 
+    // add to cart
+    // find the food from db
+    // sent to cart/CheckOut
+    public CheckOut getSingleFood(int fid){
+        CheckOut record = null;
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(SELECT_FOOD_FOR_CHECKOUT_SQL)){
+            preparedStatement.setInt(1, fid);
+            ResultSet rs= preparedStatement.executeQuery();
+            while(rs.next()){
+                int FoodID = rs.getInt("FoodID");
+                String FoodName = rs.getString("ItemName");
+                float ItemPrice = Float.parseFloat(rs.getString("ItemPrice"));
+                record = new CheckOutBuilder().setFoodID(FoodID).setItemName(FoodName).setItemPrice(ItemPrice).setQuantity(1).createCheckOut();
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return record;
+    }
+
+    //display total
+    public float getTotal(ArrayList<CheckOut> cartList){
+        float sum = 0;
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+            PreparedStatement preparedStatement = singleCon.prepareStatement(SELECT_PRICE_FOR_TOTAL_SQL)) {
+            if (cartList.size() > 0){
+                for (CheckOut item:cartList){
+                    preparedStatement.setInt(1,item.getFoodID());
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()){
+                        sum+=rs.getFloat("ItemPrice")*item.getQuantity();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sum;
+    }
+
+    public List<CheckOut> getCartStuff(ArrayList<CheckOut> cartList) {
+//        System.out.println("inside getCartStuff ->cartList: "+cartList);
+        List<CheckOut> stuff = new ArrayList<>();
+        try (Connection singleCon = ConnectionDao.getSingleCon();
+             PreparedStatement preparedStatement = singleCon.prepareStatement(SELECT_FOOD_FOR_CHECKOUT_SQL)){
+            if (cartList.size() > 0) {
+                for (CheckOut item:cartList) {
+//                    System.out.println("inside getCartStuff-> item: "+item);
+//                    System.out.println("inside getCartStuff-> item.getFoodID(): "+item.getFoodID());
+                    preparedStatement.setInt(1,item.getFoodID());
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        CheckOut row = new CheckOutBuilder().setFoodID(rs.getInt("FoodID"))
+                                .setItemName(rs.getString("ItemName"))
+                                .setItemPrice(rs.getFloat("ItemPrice")*item.getQuantity())
+                                .setQuantity(item.getQuantity())
+                                .createCheckOut();
+                        stuff.add(row);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+//        System.out.println("inside getCartStuff -> stuff: "+stuff);
+        return stuff;
+    }
+
 
     private void printSQLException(SQLException error){
         for (Throwable e : error) {
@@ -82,5 +152,6 @@ public class FoodDao {
             }
         }
     }
+
 
 }

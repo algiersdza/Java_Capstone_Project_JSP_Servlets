@@ -54,7 +54,7 @@
 
 
 <%
-    if (session.getAttribute("UserName")== null){
+    if (session.getAttribute("UserName")== null && session.getAttribute("Role") != "admin"){
         response.sendRedirect("index.jsp");
     }
 %>
@@ -70,23 +70,24 @@ Welcome ${UserName}
             <form action="AddUserServlet" method="post">
                 <div class="form-group">
                     <label>First Name</label>
-                    <input class="form-control" name="FirstName" place-holder="First Name" required>
+                    <input class="form-control" name="FirstName" placeholder="First Name" required>
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input class="form-control" name="LastName" place-holder="Last Name" required>
+                    <input class="form-control" name="LastName" placeholder="Last Name" required>
                 </div>
                 <div class="form-group">
                     <label>Username</label>
-                    <input class="form-control" name="UserName" place-holder="Username" required>
+                    <input class="form-control" name="UserName" placeholder="Username" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="Password" place-holder="Password" required>
+                    <input type="password" class="form-control" name="Password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" class="form-control" name="EmailAddress" place-holder="example@host.domain" required>
+                    <input type="email" class="form-control" name="EmailAddress" placeholder="example@host.domain"
+                           required>
                 </div>
                 <div class="form-group" >
                     <label>Role</label>

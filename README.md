@@ -64,7 +64,10 @@ extra stuff:
 - delete food from menu by admin role
 - show menu to user role
 - show menu to admin role
-- TODO
-- [ ] add to cart
-- [ ] calculate total
-- [ ] restrict admin access when logged as user role.
+- disabled submit button on checkout-cart.jsp
+
+TODO
+- [x] add to cart
+- [x] calculate total
+- [x] update total with quantity change
+- [x] restrict admin access when logged as user role.
