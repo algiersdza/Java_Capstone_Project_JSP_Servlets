@@ -1,6 +1,7 @@
 package com.group18.capstone.servlet;
 
 
+import com.group18.capstone.controller.NewEmailNotifier;
 import com.group18.capstone.controller.UserBuilder;
 import com.group18.capstone.dao.UserDao;
 import com.group18.capstone.controller.User;
@@ -10,14 +11,23 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.UUID;
 
 @WebServlet(name = "UserRegister", value = "/UserRegister")
 public class UserRegisterServlet extends HttpServlet {
     private UserDao userDao;
+    // Observer pattern
+    private UUID uuid;
+    NewEmailNotifier observer;
+    UserBuilder subject;
+
+
 
     public UserRegisterServlet(){}
     public void init(){
         userDao = new UserDao();
+        subject = new UserBuilder();
+        observer = new NewEmailNotifier(subject);
     }
 
     @Override
@@ -47,6 +57,8 @@ public class UserRegisterServlet extends HttpServlet {
                 response.sendRedirect("signupfailed.jsp");
             }else {
                 user = new UserBuilder().setFirstName(FirstName).setLastName(LastName).setUserName(UserName).setPassword(Password).setEmailAddress(EmailAddress).createUser();
+                uuid = UUID.randomUUID();
+                subject.newEmailUser(uuid,EmailAddress,FirstName);
 //                user.setFirstName(FirstName);
 //                user.setLastName(LastName);
 //                user.setUserName(UserName);

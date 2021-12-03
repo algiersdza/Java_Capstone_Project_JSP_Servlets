@@ -45,29 +45,24 @@ MYSQL credentials:
 ```
 This war file build changes:
 - Cleaned code and refactored controller classes into one class User.
+- Created UserDao and FoodDao
 - Created Singleton Connection
-- Created a builder for the User Class
+- Created a builder for the User Class, Food Class and CheckOut Class
+- Created Observer Pattern NewEmailNotifier Class
 - Modified code for cleaner readability
-- Created FoodDAO and Food Class with Builder Class
-- 
-
-```
-Part 3 requirements.  
-- [x] MVC design pattern  
-- [x] Builder design pattern  
-- [x] Singleton design pattern  
-- [ ] Observer design pattern  
-```
-
-extra stuff:
 - add food to menu by admin role
 - delete food from menu by admin role
 - show menu to user role
 - show menu to admin role
 - disabled submit button on checkout-cart.jsp
-
-TODO
-- [x] add to cart
-- [x] calculate total
-- [x] update total with quantity change
-- [x] restrict admin access when logged as user role.
+- add to cart
+- calculate total
+- update total with quantity change
+- restrict admin access when logged as user role.
+```
+Part 3 requirements.  
+- [x] MVC design pattern  
+- [x] Builder design pattern  FoodBuilder, UserBuilder, CheckOutBuilder
+- [x] Singleton design pattern  ConnectionDao
+- [x] Observer design pattern  observable ( UserBuilder : IObservable) | observer (NewEmailNotifier : IObserver)
+```

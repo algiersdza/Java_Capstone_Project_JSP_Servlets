@@ -72,7 +72,7 @@
                     <tr><th><label for="LastName-Sign-up"></label>Last Name: <input type="text" id="LastName-Sign-up" name="LastName" placeholder="Enter your Last Name"></th></tr>
                     <tr><th><label for ="Username-Sign-up">User Name: </label><input type="text" id = "Username-Sign-up" name="UserName" placeholder="Enter your username"></th></tr>
                     <tr><th><label for="Password-Sign-up">Password: </label><input type="password" id="Password-Sign-up" name="Password" placeholder="Enter your password"></th></tr>
-                    <tr><th><label for="Email-Sign-up">Email: </label><input type="email" id="Email-Sign-up" name="EmailAddress" placeholder="Enter your email"></th></tr>
+                    <tr><th><label for="Email-Sign-up">Email: </label><input type="email" id="Email-Sign-up" name="EmailAddress" placeholder="example@host.domain"></th></tr>
                     <tr><th><input type="submit" value="Register" class="btn btn-success" ></th></tr>
                     </tbody>
                 </table>

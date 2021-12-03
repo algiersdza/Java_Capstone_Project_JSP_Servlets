@@ -1,3 +1,12 @@
+
+-- variables for JDBC are located in ConnectionDao
+-- create schema called user
+-- two create table queries below with initial INSERT INTO supplied
+-- admin role created with table creation
+-- credentials for Login into application with admin privileges:
+-- username: root
+-- password: iamroot
+
 CREATE TABLE IF NOT EXISTS `user`.`user` (
                                              `UserID` int(3) AUTO_INCREMENT NOT NULL,
                                              `FirstName` VARCHAR(45) DEFAULT NULL,

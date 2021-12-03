@@ -1,6 +1,10 @@
 package com.group18.capstone.controller;
 
-public class UserBuilder {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class UserBuilder implements IObservable{
     private int userID;
     private String firstName;
     private String lastName;
@@ -8,6 +12,9 @@ public class UserBuilder {
     private String password;
     private String emailAddress;
     private String role;
+    private UUID uuid;
+
+    private List<IObserver> observers = new ArrayList<>();
 
     public UserBuilder() {
     }
@@ -50,4 +57,26 @@ public class UserBuilder {
     public User createUser() {
         return new User(userID, firstName, lastName, userName, password, emailAddress, role);
     }
+    // observable methods
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+        System.out.println("List of Observers: "+observers);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (IObserver observer:observers
+        ) {
+            observer.update(uuid,emailAddress,firstName);
+        }
+    }
+
+    public void newEmailUser(UUID uuid, String emailAddress, String firstName){
+        this.uuid = uuid;
+        this.emailAddress = emailAddress;
+        this.firstName = firstName;
+        notifyAllObservers();
+    }
+
 }
