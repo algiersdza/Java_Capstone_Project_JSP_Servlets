@@ -1,4 +1,10 @@
-### Part III of Capstone Project
+### Part III & IV of Capstone Project
+
+The final build for the Capstone project. This project demonstrates the usage of .war files, design patterns, Taglibs and JSP.
+
+Deployed on Tomcat 9.0.54.
+
+Video Demo: https://youtu.be/xBViOFjkxME
 
 #### DDL for user table
 ```
@@ -60,7 +66,7 @@ This war file build changes:
 - update total with quantity change
 - restrict admin access when logged as user role.
 ```
-Part 3 requirements.  
+Part 3 & 4 requirements.  
 - [x] MVC design pattern  
 - [x] Builder design pattern  FoodBuilder, UserBuilder, CheckOutBuilder
 - [x] Singleton design pattern  ConnectionDao
